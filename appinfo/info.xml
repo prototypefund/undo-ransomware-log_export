@@ -5,7 +5,7 @@
     <name>Behaviour Analyzer</name>
     <summary>Anonymously analysis your sync and file patterns and logs them to you nextcloud instance.</summary>
     <description><![CDATA[Anonymously analysis your sync and file patterns and logs them to you nextcloud instance. These logs are used to build a machine learning based ransomware recovery if you provide your logs per e-mail to the developers of the ransomware recovery app.]]></description>
-    <version>0.0.1</version>
+    <version>0.1.0</version>
     <licence>agpl</licence>
     <author mail="ilovemilk@wusa.io" homepage="https://undo-ransomware.github.io/">Matthias Held</author>
     <namespace>BehaviourAnalyzer</namespace>
@@ -20,7 +20,7 @@
     <navigations>
         <navigation>
             <name>Behaviour Analyzer</name>
-            <route>behaviouranalyzer.page.index</route>
+            <route>behaviour_analyzer.page.index</route>
         </navigation>
     </navigations>
 </info>

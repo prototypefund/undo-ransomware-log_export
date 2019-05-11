@@ -1,6 +1,6 @@
 <?php
-script('behaviouranalyzer', 'script');
-style('behaviouranalyzer', 'style');
+script('behaviour_analyzer', 'script');
+style('behaviour_analyzer', 'style');
 ?>
 
 <div id="app">

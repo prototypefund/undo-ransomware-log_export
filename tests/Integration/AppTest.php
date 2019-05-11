@@ -17,13 +17,13 @@ class AppTest extends TestCase {
 
     public function setUp() {
         parent::setUp();
-        $app = new App('behaviouranalyzer');
+        $app = new App('behaviour_analyzer');
         $this->container = $app->getContainer();
     }
 
     public function testAppInstalled() {
         $appManager = $this->container->query('OCP\App\IAppManager');
-        $this->assertTrue($appManager->isInstalled('behaviouranalyzer'));
+        $this->assertTrue($appManager->isInstalled('behaviour_analyzer'));
     }
 
 }
