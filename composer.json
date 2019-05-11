@@ -1,0 +1,15 @@
+{
+    "name": "Behaviour Analyzer",
+    "description": "Anonymously analysis your sync and file patterns and logs them to you nextcloud instance.",
+    "type": "project",
+    "license": "AGPL",
+    "authors": [
+        {
+            "name": "Matthias Held"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^5.4"
+    }
+}
