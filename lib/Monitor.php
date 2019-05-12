@@ -25,7 +25,7 @@ use OCA\BehaviourAnalyzer\AppInfo\Application;
 use OCA\BehaviourAnalyzer\Analyzer\EntropyAnalyzer;
 use OCA\BehaviourAnalyzer\Analyzer\EntropyResult;
 use OCA\BehaviourAnalyzer\Db\FileOperation;
-use OCA\BehaviourAnalyzer\Db\FileOperationMapper;
+use OCA\BehaviourAnalyzer\Mapper\FileOperationMapper;
 use OCP\App\IAppManager;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\Files\File;
@@ -88,8 +88,6 @@ class Monitor
      * @param IRootFolder          $rootFolder
      * @param EntropyAnalyzer      $entropyAnalyzer
      * @param FileOperationMapper  $mapper
-     * @param FileExtensionAnalyzer     $fileExtensionAnalyzer
-     * @param FileCorruptionAnalyzer $fileCorruptionAnalyzer
      * @param string               $userId
      */
     public function __construct(
@@ -128,6 +126,7 @@ class Monitor
             // check only cloud files and no system files
             return;
         }
+        $this->logger->error($path);
 
         if (!$this->request->isUserAgent([
             IRequest::USER_AGENT_CLIENT_DESKTOP,
@@ -138,10 +137,13 @@ class Monitor
             return;
         }
 
+        $this->logger->error($path);
+
         $this->nestingLevel++;
 
         switch ($mode) {
             case self::RENAME:
+                $this->logger->error('analyze rename');
                 if (preg_match('/.+\.d[0-9]+/', pathinfo($paths[1])['basename']) > 0) {
                     return;
                 }
@@ -171,6 +173,7 @@ class Monitor
 
                 return;
             case self::WRITE:
+                $this->logger->error('analyze write');
                 try {
                     $userRoot = $this->rootFolder->getUserFolder($this->userId)->getParent();
                     $node = $userRoot->get($path);
@@ -192,10 +195,12 @@ class Monitor
 
                 return;
             case self::READ:
+                $this->logger->error('analyze read');
                 $this->nestingLevel--;
 
                 return;
             case self::DELETE:
+                $this->logger->error('analyze delete');
                 try {
                     $userRoot = $this->rootFolder->getUserFolder($this->userId)->getParent();
                     $node = $userRoot->get($path);
@@ -220,6 +225,7 @@ class Monitor
 
                 return;
             case self::CREATE:
+                $this->logger->error('analyze create');
                 // only folders are created
                 $fileOperation = new FileOperation();
                 $fileOperation->setUserId($this->userId);
@@ -229,18 +235,11 @@ class Monitor
                 $fileOperation->setMimeType('httpd/unix-directory');
                 $fileOperation->setSize(0);
                 $fileOperation->setTimestamp(time());
-                $fileOperation->setCorrupted(false);
                 $fileOperation->setCommand(self::CREATE);
-                $sequenceId = $this->config->getUserValue($this->userId, Application::APP_ID, 'sequence_id', 0);
-                $fileOperation->setSequence($sequenceId);
 
                 // entropy analysis
                 $fileOperation->setEntropy(0.0);
                 $fileOperation->setStandardDeviation(0.0);
-                $fileOperation->setFileClass(EntropyResult::NORMAL);
-
-                // file extension analysis
-                $fileOperation->setFileExtensionClass(FileExtensionResult::NOT_SUSPICIOUS);
 
                 $this->mapper->insert($fileOperation);
                 $this->nestingLevel--;
@@ -357,18 +356,11 @@ class Monitor
         $fileOperation->setMimeType($node->getMimeType());
         $fileOperation->setSize(0);
         $fileOperation->setTimestamp(time());
-        $fileOperation->setCorrupted(false);
         $fileOperation->setCommand($operation);
-        $sequenceId = $this->config->getUserValue($this->userId, Application::APP_ID, 'sequence_id', 0);
-        $fileOperation->setSequence($sequenceId);
 
         // entropy analysis
         $fileOperation->setEntropy(0.0);
         $fileOperation->setStandardDeviation(0.0);
-        $fileOperation->setFileClass(EntropyResult::NORMAL);
-
-        // file extension analysis
-        $fileOperation->setFileExtensionClass(FileExtensionResult::NOT_SUSPICIOUS);
 
         $this->mapper->insert($fileOperation);
     }
@@ -394,26 +386,11 @@ class Monitor
         $fileOperation->setSize($node->getSize());
         $fileOperation->setTimestamp(time());
         $fileOperation->setCommand($operation);
-        $sequenceId = $this->config->getUserValue($this->userId, Application::APP_ID, 'sequence_id', 0);
-        $fileOperation->setSequence($sequenceId);
-
-        // file extension analysis
-        $fileExtensionResult = $this->fileExtensionAnalyzer->analyze($node->getInternalPath());
-        $fileOperation->setFileExtensionClass($fileExtensionResult->getFileExtensionClass());
-
-        $fileCorruptionResult = $this->fileCorruptionAnalyzer->analyze($node);
-        $isCorrupted = $fileCorruptionResult->isCorrupted();
-        $fileOperation->setCorrupted($isCorrupted);
-        if ($isCorrupted) {
-            $fileOperation->setFileExtensionClass(FileExtensionResult::SUSPICIOUS);
-        }
 
         // entropy analysis
         $entropyResult = $this->entropyAnalyzer->analyze($node);
         $fileOperation->setEntropy($entropyResult->getEntropy());
         $fileOperation->setStandardDeviation($entropyResult->getStandardDeviation());
-        $fileOperation->setFileClass($entropyResult->getFileClass());
-
 
         $entity = $this->mapper->insert($fileOperation);
     }

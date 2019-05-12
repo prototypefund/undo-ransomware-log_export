@@ -23,16 +23,8 @@ namespace OCA\BehaviourAnalyzer\AppInfo;
 
 use OC\Files\Filesystem;
 use OCA\BehaviourAnalyzer\Monitor;
-use OCA\BehaviourAnalyzer\Classifier;
-use OCA\BehaviourAnalyzer\Analyzer\SequenceAnalyzer;
-use OCA\BehaviourAnalyzer\Analyzer\SequenceSizeAnalyzer;
-use OCA\BehaviourAnalyzer\Analyzer\FileTypeFunnellingAnalyzer;
-use OCA\BehaviourAnalyzer\Analyzer\EntropyFunnellingAnalyzer;
-use OCA\BehaviourAnalyzer\Analyzer\FileExtensionAnalyzer;
 use OCA\BehaviourAnalyzer\Entropy\Entropy;
-use OCA\BehaviourAnalyzer\Notification\Notifier;
 use OCA\BehaviourAnalyzer\StorageWrapper;
-use OCA\BehaviourAnalyzer\Connector\Sabre\RequestPlugin;
 use OCA\BehaviourAnalyzer\Service\FileOperationService;
 use OCA\BehaviourAnalyzer\Mapper\FileOperationMapper;
 use OCP\AppFramework\App;

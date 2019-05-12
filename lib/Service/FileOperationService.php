@@ -21,7 +21,7 @@
 
 namespace OCA\BehaviourAnalyzer\Service;
 
-use OCA\BehaviourAnalyzer\Db\FileOperationMapper;
+use OCA\BehaviourAnalyzer\Mapper\FileOperationMapper;
 
 class FileOperationService
 {

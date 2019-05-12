@@ -1,6 +1,7 @@
 <?php
 namespace OCA\BehaviourAnalyzer\Controller;
 
+use OCA\BehaviourAnalyzer\Service\FileOperationService;
 use OCP\IRequest;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Http\DataResponse;
@@ -8,9 +9,11 @@ use OCP\AppFramework\Controller;
 
 class PageController extends Controller {
 	private $userId;
+	private $service;
 
-	public function __construct($AppName, IRequest $request, $UserId){
+	public function __construct($AppName, IRequest $request, FileOperationService $service, $UserId){
 		parent::__construct($AppName, $request);
+		$this->service = $service;
 		$this->userId = $UserId;
 	}
 
@@ -25,7 +28,8 @@ class PageController extends Controller {
 	 * @NoCSRFRequired
 	 */
 	public function index() {
-		return new TemplateResponse('behaviour_analyzer', 'index');  // templates/index.php
+		$fileOperations = $this->service->findAll();
+		return new TemplateResponse('behaviour_analyzer', 'index', array('fileOperations' => $fileOperations));  // templates/index.php
 	}
 
 }
