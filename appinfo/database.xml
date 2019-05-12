@@ -67,7 +67,6 @@
                 <notnull>true</notnull>
                 <length>12</length>
             </field>
-        
             <field>
                 <name>entropy</name>
                 <type>float</type>

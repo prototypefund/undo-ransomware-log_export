@@ -126,7 +126,6 @@ class Monitor
             // check only cloud files and no system files
             return;
         }
-        $this->logger->error($path);
 
         if (!$this->request->isUserAgent([
             IRequest::USER_AGENT_CLIENT_DESKTOP,
@@ -137,13 +136,10 @@ class Monitor
             return;
         }
 
-        $this->logger->error($path);
-
         $this->nestingLevel++;
 
         switch ($mode) {
             case self::RENAME:
-                $this->logger->error('analyze rename');
                 if (preg_match('/.+\.d[0-9]+/', pathinfo($paths[1])['basename']) > 0) {
                     return;
                 }
@@ -173,7 +169,6 @@ class Monitor
 
                 return;
             case self::WRITE:
-                $this->logger->error('analyze write');
                 try {
                     $userRoot = $this->rootFolder->getUserFolder($this->userId)->getParent();
                     $node = $userRoot->get($path);
@@ -195,12 +190,10 @@ class Monitor
 
                 return;
             case self::READ:
-                $this->logger->error('analyze read');
                 $this->nestingLevel--;
 
                 return;
             case self::DELETE:
-                $this->logger->error('analyze delete');
                 try {
                     $userRoot = $this->rootFolder->getUserFolder($this->userId)->getParent();
                     $node = $userRoot->get($path);
@@ -225,7 +218,6 @@ class Monitor
 
                 return;
             case self::CREATE:
-                $this->logger->error('analyze create');
                 // only folders are created
                 $fileOperation = new FileOperation();
                 $fileOperation->setUserId($this->userId);

@@ -32,7 +32,7 @@ class FileOperationMapper extends Mapper
     public function __construct(
         IDBConnection $db
     ) {
-        parent::__construct($db, 'behaviour_analyzer');
+        parent::__construct($db, 'behaviour_analyzer', "\OCA\BehaviourAnalyzer\Db\FileOperation");
     }
 
     /**

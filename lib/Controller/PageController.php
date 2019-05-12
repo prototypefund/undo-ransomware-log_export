@@ -2,6 +2,8 @@
 namespace OCA\BehaviourAnalyzer\Controller;
 
 use OCA\BehaviourAnalyzer\Service\FileOperationService;
+use OCA\BehaviourAnalyzer\Mapper\FileOperationMapper;
+use OCP\ILogger;
 use OCP\IRequest;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Http\DataResponse;
@@ -10,11 +12,15 @@ use OCP\AppFramework\Controller;
 class PageController extends Controller {
 	private $userId;
 	private $service;
+	private $logger;
+	private $mapper;
 
-	public function __construct($AppName, IRequest $request, FileOperationService $service, $UserId){
+	public function __construct($AppName, IRequest $request, FileOperationService $service, FileOperationMapper $mapper, ILogger $logger, $userId){
 		parent::__construct($AppName, $request);
 		$this->service = $service;
-		$this->userId = $UserId;
+		$this->userId = $userId;
+		$this->logger = $logger;
+		$this->mapper = $mapper;
 	}
 
 	/**
