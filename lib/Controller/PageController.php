@@ -7,6 +7,7 @@ use OCP\ILogger;
 use OCP\IRequest;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\Http\StreamResponse;
 use OCP\AppFramework\Controller;
 
 class PageController extends Controller {
@@ -36,6 +37,18 @@ class PageController extends Controller {
 	public function index() {
 		$fileOperations = $this->service->findAll();
 		return new TemplateResponse('behaviour_analyzer', 'index', array('fileOperations' => $fileOperations));  // templates/index.php
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 */
+	public function download() {
+		$fileOperations = $this->service->findAll();
+		$response = new DataResponse($fileOperations);
+		$response->addHeader('Content-Type', 'application/octet-stream');
+		$response->addHeader('Content-Disposition', 'attachment; filename="behaviour.json"');
+		return $response;
 	}
 
 }

@@ -1,4 +1,4 @@
-<table>
+<table class="logs">
     <thead>
         <tr>
             <th>Path</th>
@@ -46,7 +46,7 @@
                 <?php echo $fileOperation->getStandardDeviation(); ?>
             </td>
             <td>
-                <?php echo $fileOperation->getTimestamp(); ?>
+                <?php echo  date("d.m.Y H:i", $fileOperation->getTimestamp()); ?>
             </td>
         </tr>
         <?php
