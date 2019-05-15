@@ -32,25 +32,11 @@ use OCP\ILogger;
 class EntropyAnalyzer
 {
     /**
-     * Entropy cut-off point between normal and compressed or encrypted files.
-     *
-     * @var float
-     */
-    const ENTROPY_CUT_OFF = 7.69;
-
-    /**
      * Size of the data blocks in bytes.
      *
      * @var int
      */
     const BLOCK_SIZE = 256;
-
-    /**
-     * Standard deviation cut-off point between compressed and encrypted files.
-     *
-     * @var float
-     */
-    const SD_CUT_OFF = 0.06;
 
     /** @var ILogger */
     protected $logger;
@@ -83,19 +69,6 @@ class EntropyAnalyzer
     }
 
     /**
-     * Classifies a file using entropy measurements. It first calculates the
-     * native entropy of the file to decide wether it's a normal file with
-     * low entropy or a compressed or encrypted file with high entropy.
-     *
-     * If the file is identified as class B, it measures the
-     * standard deviation of the entropy of all blocks with a size of 256 bytes.
-     * To decide if the file is compressed or encrypted.
-     *
-     * The results classifies the file in the following three classes:
-     * ENCRYPTED
-     * COMPRESSED
-     * NORMAL
-     *
      * @param File     $node
      *
      * @return EntropyResult
@@ -103,17 +76,9 @@ class EntropyAnalyzer
     public function analyze($node)
     {
         $entropy = $this->calculateEntropyOfFile($node);
-        if ($entropy > self::ENTROPY_CUT_OFF) {
-            $entropyArray = $this->createEntropyArrayFromFile($node, self::BLOCK_SIZE);
-            $standardDeviation = $this->calculateStandardDeviationOfEntropy($entropyArray);
-            if ($standardDeviation > self::SD_CUT_OFF) {
-                return new EntropyResult(EntropyResult::COMPRESSED, $entropy, $standardDeviation);
-            }
-
-            return new EntropyResult(EntropyResult::ENCRYPTED, $entropy, $standardDeviation);
-        }
-
-        return new EntropyResult(EntropyResult::NORMAL, $entropy, 0.0);
+        $entropyArray = $this->createEntropyArrayFromFile($node, self::BLOCK_SIZE);
+        $standardDeviation = $this->calculateStandardDeviationOfEntropy($entropyArray);
+        return new EntropyResult($entropy, $standardDeviation);
     }
 
     /**
