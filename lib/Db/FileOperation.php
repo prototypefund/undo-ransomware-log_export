@@ -29,13 +29,7 @@ class FileOperation extends Entity
     public $userId;
 
     /** @var string */
-    public $path;
-
-    /** @var string */
-    public $originalName;
-
-    /** @var string */
-    public $newName;
+    public $extension;
 
     /** @var string */
     public $type;

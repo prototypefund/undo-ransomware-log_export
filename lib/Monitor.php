@@ -218,22 +218,8 @@ class Monitor
 
                 return;
             case self::CREATE:
-                // only folders are created
-                $fileOperation = new FileOperation();
-                $fileOperation->setUserId($this->userId);
-                $fileOperation->setPath(str_replace('files', '', pathinfo($path)['dirname']));
-                $fileOperation->setOriginalName(pathinfo($path)['basename']);
-                $fileOperation->setType('folder');
-                $fileOperation->setMimeType('httpd/unix-directory');
-                $fileOperation->setSize(0);
-                $fileOperation->setTimestamp(time());
-                $fileOperation->setCommand(self::CREATE);
+                $this->addFolderOperation($paths, $node, self::CREATE);
 
-                // entropy analysis
-                $fileOperation->setEntropy(0.0);
-                $fileOperation->setStandardDeviation(0.0);
-
-                $this->mapper->insert($fileOperation);
                 $this->nestingLevel--;
 
                 return;
@@ -339,11 +325,7 @@ class Monitor
     {
         $fileOperation = new FileOperation();
         $fileOperation->setUserId($this->userId);
-        $fileOperation->setPath(str_replace('files', '', pathinfo($node->getInternalPath())['dirname']));
-        $fileOperation->setOriginalName($node->getName());
-        if ($operation === self::RENAME) {
-            $fileOperation->setNewName(pathinfo($paths[1])['basename']);
-        }
+        $fileOperation->setExtension('folder');
         $fileOperation->setType('folder');
         $fileOperation->setMimeType($node->getMimeType());
         $fileOperation->setSize(0);
@@ -368,11 +350,8 @@ class Monitor
     {
         $fileOperation = new FileOperation();
         $fileOperation->setUserId($this->userId);
-        $fileOperation->setPath(str_replace('files', '', pathinfo($node->getInternalPath())['dirname']));
-        $fileOperation->setOriginalName($node->getName());
-        if ($operation === self::RENAME) {
-            $fileOperation->setNewName(pathinfo($paths[1])['basename']);
-        }
+        //TODO: add old and new extension name?
+        $fileOperation->setExtension(pathinfo($paths[0])['extension']);
         $fileOperation->setType('file');
         $fileOperation->setMimeType($node->getMimeType());
         $fileOperation->setSize($node->getSize());

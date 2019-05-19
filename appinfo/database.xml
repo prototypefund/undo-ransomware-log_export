@@ -20,19 +20,7 @@
                 <length>255</length>
             </field>
             <field>
-                <name>path</name>
-                <type>text</type>
-                <notnull>false</notnull>
-                <length>255</length>
-            </field>
-            <field>
-                <name>original_name</name>
-                <type>text</type>
-                <notnull>false</notnull>
-                <length>255</length>
-            </field>
-            <field>
-                <name>new_name</name>
+                <name>extension</name>
                 <type>text</type>
                 <notnull>false</notnull>
                 <length>255</length>

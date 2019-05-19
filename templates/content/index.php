@@ -1,9 +1,7 @@
 <table class="logs">
     <thead>
         <tr>
-            <th>Path</th>
-            <th>Original Name</th>
-            <th>New Name</th>
+            <th>Extension</th>
             <th>Type</th>
             <th>Mime Type</th>
             <th>Size</th>
@@ -19,13 +17,7 @@
         ?>
         <tr>
             <td>
-                <?php echo $fileOperation->getPath(); ?>
-            </td>
-            <td>
-                <?php echo $fileOperation->getOriginalName(); ?>
-            </td>
-            <td>
-                <?php echo $fileOperation->getNewName(); ?>
+                <?php echo $fileOperation->getExtension(); ?>
             </td>
             <td>
                 <?php echo $fileOperation->getType(); ?>
