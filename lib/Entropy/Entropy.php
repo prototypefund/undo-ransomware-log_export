@@ -58,29 +58,38 @@ class Entropy
     }
 
     /**
-     * Calculates the standard deviation.
-     *
-     * @param array $array
-     *
+     * Calculates the standard deviation of a continoues series by passing
+     * the current number of values used to calculate the standard deviation
+     * the sum of all these values and the mean of all these values.
+     * 
+     * @param float $step current value
+     * @param float $sum sum of all values
+     * @param float $mean mean of all values
+     * 
      * @return float
      */
-    public function sd($array)
-    {
-        if (is_array($array) && count($array) > 0) {
-            // square root of sum of squares devided by N-1
-            return sqrt(array_sum(array_map(
-                function ($x, $mean) {
-                    return pow($x - $mean, 2);
-                },
-                $array,
-                array_fill(
-                    0,
-                    count($array),
-                (array_sum($array) / count($array))
-                )
-            )) / (count($array) - 1));
-        }
+    public function calculateStandardDeviationOfSeries($step, $sum, $mean) {
+        return sqrt((1 / $step) * $sum - pow($mean, 2));
+    }
 
-        return 0.0;
+    /**
+     * Calculates the mean of a continoues series by passing the old mean 
+     * the new value and the number of values used to calculate the mean
+     * including the new one.
+     * 
+     * @param float $oldMean
+     * @param float $value
+     * @param float $step
+     * 
+     * @param float
+     */
+    public function calculateMeanOfSeries($oldMean, $value, $step) {
+        $mean = 0;
+        if ($step === 1) {
+            $mean = (($step - 1) / $step) + ($value / $step);
+        } else {
+            $mean = $oldMean * (($step - 1) / $step) + ($value / $step);
+        }
+        return $mean;
     }
 }

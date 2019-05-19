@@ -76,39 +76,8 @@ class EntropyAnalyzer
     public function analyze($node)
     {
         $entropy = $this->calculateEntropyOfFile($node);
-        $entropyArray = $this->createEntropyArrayFromFile($node, self::BLOCK_SIZE);
-        $standardDeviation = $this->calculateStandardDeviationOfEntropy($entropyArray);
+        $standardDeviation = $this->calculateStandardDeviationOfEntropy($node, self::BLOCK_SIZE);
         return new EntropyResult($entropy, $standardDeviation);
-    }
-
-    /**
-     * Creates an array with the entropy of the data blocks.
-     *
-     * @param File   $node
-     * @param int    $blockSize
-     *
-     * @return array
-     */
-    protected function createEntropyArrayFromFile($node, $blockSize)
-    {
-        $entropyArray = array();
-
-        $handle = $node->fopen('r');
-        if (!$handle) {
-            $this->logger->debug('createEntropyArrayFromFile: Getting file handle failed.', array('app' => Application::APP_ID));
-
-            return [];
-        }
-
-        while (!feof($handle)) {
-            $data = fread($handle, $blockSize);
-            if (strlen($data) === $blockSize) {
-                array_push($entropyArray, $this->entropy->calculateEntropy($data));
-            }
-        }
-        fclose($handle);
-
-        return $entropyArray;
     }
 
     /**
@@ -118,11 +87,33 @@ class EntropyAnalyzer
      *
      * @return float
      */
-    protected function calculateStandardDeviationOfEntropy($entropyArray)
+    protected function calculateStandardDeviationOfEntropy($node, $blockSize)
     {
-        $sd = $this->entropy->sd($entropyArray);
+        $sum = 0.0;
+        $standardDeviation = 0.0;
+        $mean = 1;
+        $step = 1;
 
-        return $sd;
+        $handle = $node->fopen('r');
+        if (!$handle) {
+            $this->logger->debug('createEntropyArrayFromFile: Getting file handle failed.', array('app' => Application::APP_ID));
+
+            return 0.0;
+        }
+
+        while (!feof($handle)) {
+            $data = fread($handle, $blockSize);
+            $step = $step + 1;
+            if (strlen($data) === $blockSize) {
+                $entropy = $this->entropy->calculateEntropy($data);
+                $sum = $sum + pow($entropy, 2);
+                $mean = $this->entropy->calculateMeanOfSeries($mean, $entropy, $step);
+                $standardDeviation = $this->entropy->calculateStandardDeviationOfSeries($step, $sum, $mean);
+            }
+        }
+        fclose($handle);
+
+        return $standardDeviation;
     }
 
     /**
