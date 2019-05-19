@@ -19,9 +19,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace OCA\BehaviourAnalyzer\Service;
+namespace OCA\LogExport\Service;
 
-use OCA\BehaviourAnalyzer\Mapper\FileOperationMapper;
+use OCA\LogExport\Mapper\FileOperationMapper;
 
 class FileOperationService
 {

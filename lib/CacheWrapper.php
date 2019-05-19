@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace OCA\BehaviourAnalyzer;
+namespace OCA\LogExport;
 
 use OC\Files\Cache\Wrapper\CacheWrapper as Wrapper;
 use OCP\Constants;

@@ -1,8 +1,8 @@
 <?php
-namespace OCA\BehaviourAnalyzer\Controller;
+namespace OCA\LogExport\Controller;
 
-use OCA\BehaviourAnalyzer\Service\FileOperationService;
-use OCA\BehaviourAnalyzer\Mapper\FileOperationMapper;
+use OCA\LogExport\Service\FileOperationService;
+use OCA\LogExport\Mapper\FileOperationMapper;
 use OCP\ILogger;
 use OCP\IRequest;
 use OCP\AppFramework\Http\TemplateResponse;
@@ -36,7 +36,7 @@ class PageController extends Controller {
 	 */
 	public function index() {
 		$fileOperations = $this->service->findAll();
-		return new TemplateResponse('behaviour_analyzer', 'index', array('fileOperations' => $fileOperations));  // templates/index.php
+		return new TemplateResponse('log_export', 'index', array('fileOperations' => $fileOperations));  // templates/index.php
 	}
 
 	/**
@@ -47,7 +47,7 @@ class PageController extends Controller {
 		$fileOperations = $this->service->findAll();
 		$response = new DataResponse($fileOperations);
 		$response->addHeader('Content-Type', 'application/octet-stream');
-		$response->addHeader('Content-Disposition', 'attachment; filename="behaviour.json"');
+		$response->addHeader('Content-Disposition', 'attachment; filename="log.json"');
 		return $response;
 	}
 

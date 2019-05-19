@@ -19,13 +19,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace OCA\BehaviourAnalyzer;
+namespace OCA\LogExport;
 
-use OCA\BehaviourAnalyzer\AppInfo\Application;
-use OCA\BehaviourAnalyzer\Analyzer\EntropyAnalyzer;
-use OCA\BehaviourAnalyzer\Analyzer\EntropyResult;
-use OCA\BehaviourAnalyzer\Db\FileOperation;
-use OCA\BehaviourAnalyzer\Mapper\FileOperationMapper;
+use OCA\LogExport\AppInfo\Application;
+use OCA\LogExport\Analyzer\EntropyAnalyzer;
+use OCA\LogExport\Analyzer\EntropyResult;
+use OCA\LogExport\Db\FileOperation;
+use OCA\LogExport\Mapper\FileOperationMapper;
 use OCP\App\IAppManager;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\Files\File;

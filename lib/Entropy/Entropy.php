@@ -19,7 +19,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace OCA\BehaviourAnalyzer\Entropy;
+namespace OCA\LogExport\Entropy;
 
 use OCP\ILogger;
 

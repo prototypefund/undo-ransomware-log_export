@@ -19,7 +19,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace OCA\BehaviourAnalyzer\Mapper;
+namespace OCA\LogExport\Mapper;
 
 use OCP\IDBConnection;
 use OCP\AppFramework\Db\Mapper;
@@ -32,7 +32,7 @@ class FileOperationMapper extends Mapper
     public function __construct(
         IDBConnection $db
     ) {
-        parent::__construct($db, 'behaviour_analyzer', "\OCA\BehaviourAnalyzer\Db\FileOperation");
+        parent::__construct($db, 'log_export', "\OCA\LogExport\Db\FileOperation");
     }
 
     /**
@@ -47,7 +47,7 @@ class FileOperationMapper extends Mapper
      */
     public function find($id, $userId)
     {
-        $sql = 'SELECT * FROM `*PREFIX*behaviour_analyzer` '.
+        $sql = 'SELECT * FROM `*PREFIX*log_export` '.
             'WHERE `id` = ? AND `user_id` = ?';
 
         return $this->findEntity($sql, [$id, $userId]);
@@ -63,7 +63,7 @@ class FileOperationMapper extends Mapper
      */
     public function findAll(array $params = [], $limit = null, $offset = null)
     {
-        $sql = 'SELECT * FROM `*PREFIX*behaviour_analyzer` WHERE `user_id` = ?';
+        $sql = 'SELECT * FROM `*PREFIX*log_export` WHERE `user_id` = ?';
 
         return $this->findEntities($sql, $params, $limit, $offset);
     }
@@ -75,7 +75,7 @@ class FileOperationMapper extends Mapper
      */
     public function deleteById($id, $userId)
     {
-        $sql = 'DELETE FROM `*PREFIX*behaviour_analyzer` WHERE `id` = ? AND `user_id` = ?';
+        $sql = 'DELETE FROM `*PREFIX*log_export` WHERE `id` = ? AND `user_id` = ?';
         $stmt = $this->execute($sql, [$id, $userId]);
         $stmt->closeCursor();
     }

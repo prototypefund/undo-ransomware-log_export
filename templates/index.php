@@ -1,6 +1,6 @@
 <?php
-script('behaviour_analyzer', 'script');
-style('behaviour_analyzer', 'style');
+script('log_export', 'script');
+style('log_export', 'style');
 ?>
 
 <div id="app">

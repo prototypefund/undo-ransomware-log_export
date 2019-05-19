@@ -18,8 +18,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-$app = new \OCA\BehaviourAnalyzer\AppInfo\Application();
+$app = new \OCA\LogExport\AppInfo\Application();
 $app->register();
 
 // debug mode
-\OC::$server->getConfig()->setAppValue('behaviour_analyzer', 'debug', 0);
+\OC::$server->getConfig()->setAppValue('log_export', 'debug', 0);

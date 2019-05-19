@@ -19,14 +19,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace OCA\BehaviourAnalyzer\AppInfo;
+namespace OCA\LogExport\AppInfo;
 
 use OC\Files\Filesystem;
-use OCA\BehaviourAnalyzer\Monitor;
-use OCA\BehaviourAnalyzer\Entropy\Entropy;
-use OCA\BehaviourAnalyzer\StorageWrapper;
-use OCA\BehaviourAnalyzer\Service\FileOperationService;
-use OCA\BehaviourAnalyzer\Mapper\FileOperationMapper;
+use OCA\LogExport\Monitor;
+use OCA\LogExport\Entropy\Entropy;
+use OCA\LogExport\StorageWrapper;
+use OCA\LogExport\Service\FileOperationService;
+use OCA\LogExport\Mapper\FileOperationMapper;
 use OCP\AppFramework\App;
 use OCP\Files\Storage\IStorage;
 use OCP\Notification\IManager;
@@ -39,7 +39,7 @@ use OCP\ISession;
 
 class Application extends App
 {
-    const APP_ID = 'behaviour_analyzer';
+    const APP_ID = 'log_export';
 
     public function __construct()
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\BehaviourAnalyzer\Tests\Integration\Controller;
+namespace OCA\LogExport\Tests\Integration\Controller;
 
 use OCP\AppFramework\App;
 use Test\TestCase;
@@ -17,13 +17,13 @@ class AppTest extends TestCase {
 
     public function setUp() {
         parent::setUp();
-        $app = new App('behaviour_analyzer');
+        $app = new App('log_export');
         $this->container = $app->getContainer();
     }
 
     public function testAppInstalled() {
         $appManager = $this->container->query('OCP\App\IAppManager');
-        $this->assertTrue($appManager->isInstalled('behaviour_analyzer'));
+        $this->assertTrue($appManager->isInstalled('log_export'));
     }
 
 }

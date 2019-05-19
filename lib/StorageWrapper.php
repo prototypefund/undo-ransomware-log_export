@@ -19,7 +19,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace OCA\BehaviourAnalyzer;
+namespace OCA\LogExport;
 
 use OC\Files\Storage\Wrapper\Wrapper;
 use OCP\Files\Storage\IStorage;

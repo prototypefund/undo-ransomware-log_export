@@ -1,5 +1,5 @@
 {
-    "name": "Behaviour Analyzer",
+    "name": "Log Export",
     "description": "Anonymously analysis your sync and file patterns and logs them to you nextcloud instance.",
     "type": "project",
     "license": "AGPL",

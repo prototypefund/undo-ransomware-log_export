@@ -19,10 +19,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace OCA\BehaviourAnalyzer\Analyzer;
+namespace OCA\LogExport\Analyzer;
 
-use OCA\BehaviourAnalyzer\AppInfo\Application;
-use OCA\BehaviourAnalyzer\Entropy\Entropy;
+use OCA\LogExport\AppInfo\Application;
+use OCA\LogExport\Entropy\Entropy;
 use OCP\Files\File;
 use OCP\Files\IRootFolder;
 use OCP\Files\Storage\IStorage;
