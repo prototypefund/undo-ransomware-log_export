@@ -36,6 +36,15 @@ class PageController extends Controller {
 	 */
 	public function index() {
 		$fileOperations = $this->service->findAll();
+
+		// sort ASC for timestamp
+        usort($fileOperations, function ($a, $b) {
+            if ($a->getTimestamp() === $b->getTimestamp()) {
+                return 0;
+            }
+            return $b->getTimestamp() - $a->getTimestamp();
+        });
+
 		return new TemplateResponse('log_export', 'index', array('fileOperations' => $fileOperations));  // templates/index.php
 	}
 
