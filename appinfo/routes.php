@@ -10,6 +10,9 @@
 return [
     'routes' => [
 	   ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
-	   ['name' => 'page#download', 'url' => '/download', 'verb' => 'GET'],
+       ['name' => 'page#download', 'url' => '/sync/download', 'verb' => 'GET'],
+       ['name' => 'scan#download', 'url' => '/scan/download', 'verb' => 'GET'],
+       ['name' => 'scan#filesToScan', 'url' => '/api/{apiVersion}/files-to-scan', 'verb' => 'GET', 'requirements' => ['apiVersion' => 'v1']],
+       ['name' => 'scan#scan', 'url' => '/api/{apiVersion}/scan', 'verb' => 'POST', 'requirements' => ['apiVersion' => 'v1']],
     ]
 ];
